@@ -86,9 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const url = document.getElementById('edit-url').value;
         const category = document.getElementById('edit-category').value;
         db.collection('bookmarks').doc(editIndex).update({ title, url, category }).then(() => {
-            displayBookmarks();
-            editForm.reset();
-            document.getElementById('edit-bookmark').style.display = 'none';
+            window.location.reload();
         });
     });
 
@@ -98,8 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const url = document.getElementById('url').value;
         const category = document.getElementById('category').value;
         db.collection('bookmarks').add({ title, url, category }).then(() => {
-            displayBookmarks();
-            form.reset();
+            window.location.reload();
         });
     });
 
