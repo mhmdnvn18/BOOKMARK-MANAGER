@@ -1,38 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+    --background-color: #f9f9f9;
+    --text-color: #333;
+    --header-background: linear-gradient(90deg, #4b6cb7, #182848);
+    --button-background: linear-gradient(90deg, #4b6cb7, #182848);
+    --button-hover-background: linear-gradient(90deg, #182848, #4b6cb7);
+    --edit-button-background: linear-gradient(90deg, #007bff, #0056b3);
+    --edit-button-hover-background: linear-gradient(90deg, #0056b3, #007bff);
+    --bookmark-category-background: linear-gradient(90deg, #4b6cb7, #182848);
+    --logout-button-background: linear-gradient(90deg, #ff4d4d, #ff1a1a);
+    --logout-button-hover-background: linear-gradient(90deg, #ff1a1a, #ff4d4d);
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 header {
-    background-color: #333;
+    background: var(--header-background);
     color: #fff;
     padding: 1rem 0;
     text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+header .header-buttons {
+    display: flex;
+    gap: 1rem;
 }
 
 main {
-    padding: 1rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-#add-bookmark {
+#add-bookmark, #edit-bookmark, #bookmarks {
     background: #fff;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-#bookmarks {
-    background: #fff;
-    padding: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
     margin-top: 0;
+    color: var(--text-color);
+    font-size: 1.25rem;
+    font-weight: 600;
 }
 
 form {
@@ -40,44 +69,42 @@ form {
     flex-direction: column;
 }
 
-input, button {
-    padding: 0.5rem;
+input, button, select {
+    padding: 0.75rem;
     margin: 0.5rem 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
 }
 
 button {
-    background-color: #333;
+    background: var(--button-background);
     color: #fff;
     border: none;
     cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 button:hover {
-    background-color: #555;
+    background: var(--button-hover-background);
 }
 
 button.edit {
-    background-color: #007bff;
+    background: var(--edit-button-background);
     color: #fff;
     border: none;
     cursor: pointer;
+    transition: background 0.3s ease;
 }
 
 button.edit:hover {
-    background-color: #0056b3;
-}
-
-#edit-bookmark {
-    background: #fff;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: none;
+    background: var(--edit-button-hover-background);
 }
 
 .bookmark {
-    padding: 0.5rem;
+    padding: 1rem;
     border-bottom: 1px solid #ddd;
 }
 
@@ -86,21 +113,27 @@ button.edit:hover {
 }
 
 .bookmark-title {
-    font-weight: bold;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
 .bookmark-url {
-    color: #333;
+    color: #007bff;
     text-decoration: none;
+}
+
+.bookmark-url:hover {
+    text-decoration: underline;
 }
 
 .bookmark-category {
     font-style: italic;
     color: #fff;
-    background-color: #007bff;
-    padding: 0.2rem 0.5rem;
-    border-radius: 3px;
+    background: var(--bookmark-category-background);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
     display: inline-block;
+    font-size: 0.875rem;
 }
 
 .category-container {
@@ -112,6 +145,16 @@ button.edit:hover {
 .category-section {
     flex: 1 1 calc(25% - 1rem);
     box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.category-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -127,23 +170,31 @@ button.edit:hover {
 }
 
 .category-title {
-    background-color: #333;
+    background: var(--bookmark-category-background);
     color: #fff;
-    padding: 0.5rem;
+    padding: 0.75rem;
     border-radius: 5px;
     margin-bottom: 1rem;
     text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .bookmark-card {
     background: #fff;
     padding: 1rem;
     margin-bottom: 1rem;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
     gap: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bookmark-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .bookmark-details {
@@ -164,47 +215,68 @@ button.edit:hover {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f4f4f4;
+    background-color: var(--background-color);
 }
 
 #login-form {
     background: #fff;
     padding: 2rem;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
 }
 
 #login-form input {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.75rem;
     margin: 0.5rem 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
 }
 
 #login-form button {
     width: 100%;
-    padding: 0.5rem;
-    background-color: #333;
+    padding: 0.75rem;
+    background: var(--button-background);
     color: #fff;
     border: none;
     cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 #login-form button:hover {
-    background-color: #555;
+    background: var(--button-hover-background);
 }
 
 .logout-button {
-    background-color: #ff4d4d;
+    background: var(--logout-button-background);
     color: #fff;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     cursor: pointer;
     border-radius: 5px;
-    margin-left: 1rem;
+    transition: background 0.3s ease;
+    font-size: 1rem;
+    font-weight: 600;
 }
 
 .logout-button:hover {
-    background-color: #ff1a1a;
+    background: var(--logout-button-hover-background);
+}
+
+body.dark-mode {
+    --background-color: #1a1a1a;
+    --text-color: #f4f4f4;
+    --header-background: linear-gradient(90deg, #182848, #4b6cb7);
+    --button-background: linear-gradient(90deg, #182848, #4b6cb7);
+    --button-hover-background: linear-gradient(90deg, #4b6cb7, #182848);
+    --edit-button-background: linear-gradient(90deg, #0056b3, #007bff);
+    --edit-button-hover-background: linear-gradient(90deg, #007bff, #0056b3);
+    --bookmark-category-background: linear-gradient(90deg, #182848, #4b6cb7);
+    --logout-button-background: linear-gradient(90deg, #ff1a1a, #ff4d4d);
+    --logout-button-hover-background: linear-gradient(90deg, #ff4d4d, #ff1a1a);
 }

@@ -14,7 +14,10 @@
     </script>
     <header>
         <h1>Bookmark Manager</h1>
-        <button class="logout-button" onclick="logout()">Logout</button>
+        <div class="header-buttons">
+            <button id="theme-toggle" class="logout-button">Toggle Theme</button>
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </div>
     </header>
     <main>
         <section id="add-bookmark">
@@ -173,6 +176,15 @@
             window.logout = function() {
                 localStorage.removeItem('loggedIn');
                 window.location.href = 'login.html';
+            }
+
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            });
+
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
             }
 
             displayBookmarks();
