@@ -16,7 +16,13 @@
             <form id="bookmark-form">
                 <input type="text" id="title" placeholder="Title" required>
                 <input type="url" id="url" placeholder="URL" required>
-                <input type="text" id="category" placeholder="Category" required>
+                <select id="category" required>
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Education">Education</option>
+                    <option value="Entertainment">Entertainment</option>
+                </select>
                 <button type="submit">Add Bookmark</button>
             </form>
         </section>
@@ -25,7 +31,13 @@
             <form id="edit-bookmark-form">
                 <input type="text" id="edit-title" placeholder="Title" required>
                 <input type="url" id="edit-url" placeholder="URL" required>
-                <input type="text" id="edit-category" placeholder="Category" required>
+                <select id="edit-category" required>
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="Work">Work</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Education">Education</option>
+                    <option value="Entertainment">Entertainment</option>
+                </select>
                 <button type="submit">Save Changes</button>
             </form>
         </section>
