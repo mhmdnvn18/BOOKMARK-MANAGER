@@ -6,12 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Firebase configuration
     const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_STORAGE_BUCKET",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
+        apiKey: "AIzaSyDSyI1drQSWkU1192Ol_7UnOztxxTZkerQ",
+        authDomain: "bookmark-manager-7c5ab.firebaseapp.com",
+        projectId: "bookmark-manager-7c5ab",
+        storageBucket: "bookmark-manager-7c5ab.firebasestorage.app",
+        messagingSenderId: "1098246411927",
+        appId: "1:1098246411927:web:9a44915017f9d35fbefbd2",
+        measurementId: "G-YF6CS3N1C6"
     };
 
     // Initialize Firebase
@@ -86,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
         displayBookmarks();
         editForm.reset();
         document.getElementById('edit-bookmark').style.display = 'none';
-    });
 
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
