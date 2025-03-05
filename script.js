@@ -89,5 +89,10 @@ document.addEventListener('DOMContentLoaded', function() {
         form.reset();
     });
 
+    window.logout = function() {
+        localStorage.removeItem('loggedIn');
+        window.location.href = 'login.html';
+    }
+
     displayBookmarks();
 });

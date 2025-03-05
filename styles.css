@@ -114,6 +114,18 @@ button.edit:hover {
     box-sizing: border-box;
 }
 
+@media (max-width: 768px) {
+    .category-section {
+        flex: 1 1 calc(50% - 1rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .category-section {
+        flex: 1 1 100%;
+    }
+}
+
 .category-title {
     background-color: #333;
     color: #fff;
@@ -181,4 +193,18 @@ button.edit:hover {
 
 #login-form button:hover {
     background-color: #555;
+}
+
+.logout-button {
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 1rem;
+}
+
+.logout-button:hover {
+    background-color: #ff1a1a;
 }
