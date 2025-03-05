@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
         displayBookmarks();
         editForm.reset();
         document.getElementById('edit-bookmark').style.display = 'none';
+    });
 
     form.addEventListener('submit', async function(event) {
         event.preventDefault();
