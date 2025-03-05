@@ -93,18 +93,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = document.getElementById('title').value;
         const url = document.getElementById('url').value;
         const category = document.getElementById('category').value;
-        await db.collection('bookmarks').add({ title, url, category });
-        displayBookmarks();
-        form.reset();collection('bookmarks').add({ title, url, category });
-    });     console.log('Bookmark added successfully');
+        console.log('Adding bookmark:', { title, url, category });
+        try {
+            await db.collection('bookmarks').add({ title, url, category });
+            console.log('Bookmark added successfully');
             displayBookmarks();
-    window.logout = function() {
-        localStorage.removeItem('loggedIn');
-        window.location.href = 'login.html';mark:', error);
-    }   }
+            form.reset();
+        } catch (error) {
+            console.error('Error adding bookmark:', error);
+        }
     });
-    displayBookmarks();
-}); window.logout = function() {
+
+    window.logout = function() {
         localStorage.removeItem('loggedIn');
         window.location.href = 'login.html';
     }
