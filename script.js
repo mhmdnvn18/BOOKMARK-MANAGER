@@ -9,18 +9,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function displayBookmarks() {
         bookmarkList.innerHTML = '';
+        const categories = {};
+
         bookmarks.forEach((bookmark, index) => {
-            const bookmarkElement = document.createElement('div');
-            bookmarkElement.classList.add('bookmark');
-            bookmarkElement.innerHTML = `
-                <span class="bookmark-title">${bookmark.title}</span>
-                <a href="${bookmark.url}" class="bookmark-url" target="_blank">${bookmark.url}</a>
-                <span class="bookmark-category">${bookmark.category}</span>
-                <button class="edit" onclick="editBookmark(${index})">Edit</button>
-                <button onclick="deleteBookmark(${index})">Delete</button>
-            `;
-            bookmarkList.appendChild(bookmarkElement);
+            if (!categories[bookmark.category]) {
+                categories[bookmark.category] = [];
+            }
+            categories[bookmark.category].push({ ...bookmark, index });
         });
+
+        for (const category in categories) {
+            const categorySection = document.createElement('div');
+            categorySection.classList.add('category-section');
+            categorySection.innerHTML = `<h3 class="category-title">${category}</h3>`;
+
+            categories[category].forEach(bookmark => {
+                const bookmarkElement = document.createElement('div');
+                bookmarkElement.classList.add('bookmark-card');
+                bookmarkElement.innerHTML = `
+                    <span class="bookmark-title">${bookmark.title}</span>
+                    <a href="${bookmark.url}" class="bookmark-url" target="_blank">${bookmark.url}</a>
+                    <span class="bookmark-category">${bookmark.category}</span>
+                    <button class="edit" onclick="editBookmark(${bookmark.index})">Edit</button>
+                    <button onclick="deleteBookmark(${bookmark.index})">Delete</button>
+                `;
+                categorySection.appendChild(bookmarkElement);
+            });
+
+            bookmarkList.appendChild(categorySection);
+        }
     }
 
     window.deleteBookmark = function(index) {
