@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('bookmark-form');
     const editForm = document.getElementById('edit-bookmark-form');
-    const bookmarkList = document.getElementById('bookmark-list');
+    const bookmarkList = document.getElementById('bookmarks-grid');
     const themeToggle = document.getElementById('theme-toggle');
+    const searchInput = document.querySelector('.search-bar input');
     let editIndex = null;
 
     // Firebase configuration
@@ -57,20 +58,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 categories[category].forEach(bookmark => {
                     const bookmarkElement = document.createElement('div');
-                    bookmarkElement.classList.add('bookmark-card');
+                    bookmarkElement.classList.add('col-lg-4', 'col-md-6');
                     bookmarkElement.innerHTML = `
-                        <img src="https://www.google.com/s2/favicons?domain=${new URL(bookmark.url).hostname}" class="bookmark-preview" alt="Website Preview">
-                        <div class="bookmark-details">
-                            <span class="bookmark-title">${bookmark.title}</span>
-                            <a href="${bookmark.url}" class="bookmark-url" target="_blank">${bookmark.url}</a>
-                            <span class="bookmark-category">${bookmark.category}</span>
-                        </div>
-                        <div>
-                            <button class="edit" onclick="editBookmark('${bookmark.id}')">Edit</button>
-                            <button onclick="deleteBookmark('${bookmark.id}')">Delete</button>
+                        <div class="bookmark-card glass-card">
+                            <div class="category-chip">${bookmark.category}</div>
+                            <div class="mb-3">
+                                <i class="fab fa-${bookmark.icon} fa-2x text-primary"></i>
+                            </div>
+                            <h3 class="h5 mb-2">${bookmark.title}</h3>
+                            <p class="text-muted mb-3">${bookmark.description}</p>
+                            <a href="${bookmark.url}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                Visit Site <i class="fas fa-external-link-alt ms-2"></i>
+                            </a>
+                            <div class="bookmark-actions">
+                                <button class="btn btn-sm btn-light me-2" onclick="editBookmark('${bookmark.id}')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-light" onclick="deleteBookmark('${bookmark.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
                         </div>
                     `;
-                    categorySection.appendChild(bookmarkElement);
+                    bookmarkList.appendChild(bookmarkElement);
                 });
 
                 categoryContainer.appendChild(categorySection);
@@ -83,6 +93,20 @@ document.addEventListener('DOMContentLoaded', function() {
             spinner.style.display = 'none';
         }
     }
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const bookmarks = document.querySelectorAll('.bookmark-card');
+        bookmarks.forEach(bookmark => {
+            const title = bookmark.querySelector('.h5').textContent.toLowerCase();
+            const description = bookmark.querySelector('.text-muted').textContent.toLowerCase();
+            if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                bookmark.parentElement.style.display = 'block';
+            } else {
+                bookmark.parentElement.style.display = 'none';
+            }
+        });
+    });
 
     window.deleteBookmark = function(id) {
         confirmationDialog.style.display = 'block';
