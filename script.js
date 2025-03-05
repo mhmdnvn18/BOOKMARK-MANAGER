@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
             categories[bookmark.category].push({ ...bookmark, index });
         });
 
+        const categoryContainer = document.createElement('div');
+        categoryContainer.classList.add('category-container');
+
         for (const category in categories) {
             const categorySection = document.createElement('div');
             categorySection.classList.add('category-section');
@@ -27,17 +30,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 const bookmarkElement = document.createElement('div');
                 bookmarkElement.classList.add('bookmark-card');
                 bookmarkElement.innerHTML = `
-                    <span class="bookmark-title">${bookmark.title}</span>
-                    <a href="${bookmark.url}" class="bookmark-url" target="_blank">${bookmark.url}</a>
-                    <span class="bookmark-category">${bookmark.category}</span>
-                    <button class="edit" onclick="editBookmark(${bookmark.index})">Edit</button>
-                    <button onclick="deleteBookmark(${bookmark.index})">Delete</button>
+                    <img src="https://www.google.com/s2/favicons?domain=${bookmark.url}" class="bookmark-preview" alt="Website Preview">
+                    <div class="bookmark-details">
+                        <span class="bookmark-title">${bookmark.title}</span>
+                        <a href="${bookmark.url}" class="bookmark-url" target="_blank">${bookmark.url}</a>
+                        <span class="bookmark-category">${bookmark.category}</span>
+                    </div>
+                    <div>
+                        <button class="edit" onclick="editBookmark(${bookmark.index})">Edit</button>
+                        <button onclick="deleteBookmark(${bookmark.index})">Delete</button>
+                    </div>
                 `;
                 categorySection.appendChild(bookmarkElement);
             });
 
-            bookmarkList.appendChild(categorySection);
+            categoryContainer.appendChild(categorySection);
         }
+
+        bookmarkList.appendChild(categoryContainer);
     }
 
     window.deleteBookmark = function(index) {
