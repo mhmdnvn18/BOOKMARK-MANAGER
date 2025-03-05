@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('bookmark-form');
     const editForm = document.getElementById('edit-bookmark-form');
     const bookmarkList = document.getElementById('bookmark-list');
-    const themeToggle = document.getElementById('theme-toggle');
     let editIndex = null;
 
     // Firebase configuration
@@ -109,15 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.logout = function() {
         localStorage.removeItem('loggedIn');
         window.location.href = 'login.html';
-    }
-
-    themeToggle.addEventListener('click', function() {
-        document.body.classList.toggle('dark-mode');
-        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-    });
-
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-mode');
     }
 
     displayBookmarks();
