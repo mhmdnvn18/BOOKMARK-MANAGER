@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.deleteBookmark = function(id) {
         db.collection('bookmarks').doc(id).delete().then(() => {
-            displayBookmarks();
+            window.location.reload();
         });
     }
 
