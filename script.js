@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function displayBookmarks() {
         bookmarkList.innerHTML = '';
-        const querySnapshot = await getDocs(collection(db, 'bookmarks'));
+        const querySnapshot = await db.collection('bookmarks').get();
         const categories = {};
         querySnapshot.forEach((doc) => {
             const bookmark = doc.data();
@@ -63,13 +63,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     window.deleteBookmark = async function(id) {
-        await deleteDoc(doc(db, 'bookmarks', id));
+        await db.collection('bookmarks').doc(id).delete();
         displayBookmarks();
     }
 
     window.editBookmark = async function(id) {
         editIndex = id;
-        const docSnap = await getDoc(doc(db, 'bookmarks', id));
+        const docSnap = await db.collection('bookmarks').doc(id).get();
         const bookmark = docSnap.data();
         document.getElementById('edit-title').value = bookmark.title;
         document.getElementById('edit-url').value = bookmark.url;
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = document.getElementById('edit-title').value;
         const url = document.getElementById('edit-url').value;
         const category = document.getElementById('edit-category').value;
-        await updateDoc(doc(db, 'bookmarks', editIndex), { title, url, category });
+        await db.collection('bookmarks').doc(editIndex).update({ title, url, category });
         displayBookmarks();
         editForm.reset();
         document.getElementById('edit-bookmark').style.display = 'none';
@@ -93,12 +93,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = document.getElementById('title').value;
         const url = document.getElementById('url').value;
         const category = document.getElementById('category').value;
-        await addDoc(collection(db, 'bookmarks'), { title, url, category });
+        await db.collection('bookmarks').add({ title, url, category });
         displayBookmarks();
-        form.reset();
-    });
-
+        form.reset();collection('bookmarks').add({ title, url, category });
+    });     console.log('Bookmark added successfully');
+            displayBookmarks();
     window.logout = function() {
+        localStorage.removeItem('loggedIn');
+        window.location.href = 'login.html';mark:', error);
+    }   }
+    });
+    displayBookmarks();
+}); window.logout = function() {
         localStorage.removeItem('loggedIn');
         window.location.href = 'login.html';
     }
