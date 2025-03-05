@@ -1,12 +1,19 @@
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('bookmark-form');
     const editForm = document.getElementById('edit-bookmark-form');
     const bookmarkList = document.getElementById('bookmark-list');
     let editIndex = null;
 
-    // Fetch Firebase configuration from Firebase Function
-    const response = await fetch('https://YOUR_PROJECT_ID.cloudfunctions.net/getFirebaseConfig');
-    const firebaseConfig = await response.json();
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDSyI1drQSWkU1192Ol_7UnOztxxTZkerQ",
+        authDomain: "bookmark-manager-7c5ab.firebaseapp.com",
+        projectId: "bookmark-manager-7c5ab",
+        storageBucket: "bookmark-manager-7c5ab.firebasestorage.app",
+        messagingSenderId: "1098246411927",
+        appId: "1:1098246411927:web:9a44915017f9d35fbefbd2",
+        measurementId: "G-YF6CS3N1C6"
+    };
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
