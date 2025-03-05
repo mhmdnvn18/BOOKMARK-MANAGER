@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const bookmarkElement = document.createElement('div');
                 bookmarkElement.classList.add('bookmark-card');
                 bookmarkElement.innerHTML = `
-                    <img src="https://www.google.com/s2/favicons?domain=${bookmark.url}" class="bookmark-preview" alt="Website Preview">
+                    <img src="https://www.google.com/s2/favicons?domain=${new URL(bookmark.url).hostname}" class="bookmark-preview" alt="Website Preview">
                     <div class="bookmark-details">
                         <span class="bookmark-title">${bookmark.title}</span>
                         <a href="${bookmark.url}" class="bookmark-url" target="_blank">${bookmark.url}</a>
