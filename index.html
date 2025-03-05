@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookmark Manager</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <script>
@@ -12,55 +14,72 @@
             window.location.href = 'login.html';
         }
     </script>
-    <header>
-        <h1>Bookmark Manager</h1>
-        <div class="header-buttons">
-            <button id="theme-toggle" class="logout-button">Toggle Theme</button>
-            <button class="logout-button" onclick="logout()">Logout</button>
+    <header class="bg-primary text-white p-3 mb-4">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="h3">Bookmark Manager</h1>
+            <div class="header-buttons">
+                <button id="theme-toggle" class="btn btn-secondary"><i class="fa-solid fa-moon"></i></button>
+                <button class="btn btn-danger" onclick="logout()">Logout</button>
+            </div>
         </div>
     </header>
-    <main>
-        <section id="add-bookmark">
-            <h2>Add Bookmark</h2>
-            <form id="bookmark-form">
-                <label for="title">Title</label>
-                <input type="text" id="title" placeholder="Title" required>
-                <label for="url">URL</label>
-                <input type="url" id="url" placeholder="URL" required>
-                <label for="category">Category</label>
-                <select id="category" required>
-                    <option value="" disabled selected>Select Category</option>
-                    <option value="Work">Work</option>
-                    <option value="Personal">Personal</option>
-                    <option value="Education">Education</option>
-                    <option value="Entertainment">Entertainment</option>
-                </select>
-                <button type="submit">Add Bookmark</button>
+    <main class="container">
+        <section id="add-bookmark" class="mb-4">
+            <h2 class="h4">Add Bookmark</h2>
+            <form id="bookmark-form" class="form">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" class="form-control" placeholder="Title" required>
+                </div>
+                <div class="form-group">
+                    <label for="url">URL</label>
+                    <input type="url" id="url" class="form-control" placeholder="URL" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" class="form-control" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Education">Education</option>
+                        <option value="Entertainment">Entertainment</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Bookmark</button>
             </form>
         </section>
-        <section id="edit-bookmark">
-            <h2>Edit Bookmark</h2>
-            <form id="edit-bookmark-form">
-                <label for="edit-title">Title</label>
-                <input type="text" id="edit-title" placeholder="Title" required>
-                <label for="edit-url">URL</label>
-                <input type="url" id="edit-url" placeholder="URL" required>
-                <label for="edit-category">Category</label>
-                <select id="edit-category" required>
-                    <option value="" disabled selected>Select Category</option>
-                    <option value="Work">Work</option>
-                    <option value="Personal">Personal</option>
-                    <option value="Education">Education</option>
-                    <option value="Entertainment">Entertainment</option>
-                </select>
-                <button type="submit">Save Changes</button>
+        <section id="edit-bookmark" class="mb-4" style="display: none;">
+            <h2 class="h4">Edit Bookmark</h2>
+            <form id="edit-bookmark-form" class="form">
+                <div class="form-group">
+                    <label for="edit-title">Title</label>
+                    <input type="text" id="edit-title" class="form-control" placeholder="Title" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-url">URL</label>
+                    <input type="url" id="edit-url" class="form-control" placeholder="URL" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-category">Category</label>
+                    <select id="edit-category" class="form-control" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Education">Education</option>
+                        <option value="Entertainment">Entertainment</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
         </section>
         <section id="bookmarks">
-            <h2>Bookmarks</h2>
-            <div id="bookmark-list"></div>
+            <h2 class="h4">Bookmarks</h2>
+            <div id="bookmark-list" class="row"></div>
         </section>
     </main>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
@@ -106,21 +125,25 @@
                 for (const category in categories) {
                     const categorySection = document.createElement('div');
                     categorySection.classList.add('category-section');
-                    categorySection.innerHTML = `<h3 class="category-title">${category}</h3>`;
+                    categorySection.innerHTML = `<h3 class="category-title">${category} (${categories[category].length})</h3>`;
 
                     categories[category].forEach(bookmark => {
+                        const categoryClass = `card-header-${bookmark.category.toLowerCase()}`;
                         const bookmarkElement = document.createElement('div');
-                        bookmarkElement.classList.add('bookmark-card');
+                        bookmarkElement.classList.add('card', 'text-bg-primary', 'mb-3');
+                        bookmarkElement.style.maxWidth = '18rem';
                         bookmarkElement.innerHTML = `
-                            <img src="https://www.google.com/s2/favicons?domain=${new URL(bookmark.url).hostname}" class="bookmark-preview" alt="Website Preview">
-                            <div class="bookmark-details">
-                                <span class="bookmark-title">${bookmark.title}</span>
-                                <a href="${bookmark.url}" class="bookmark-url" target="_blank">${bookmark.url}</a>
-                                <span class="bookmark-category">${bookmark.category}</span>
-                            </div>
-                            <div>
-                                <button class="edit" onclick="editBookmark('${bookmark.id}')">Edit</button>
-                                <button onclick="deleteBookmark('${bookmark.id}')">Delete</button>
+                            <div class="card-header ${categoryClass}">${category}</div>
+                            <div class="card-body">
+                                <h5 class="card-title">${bookmark.title}</h5>
+                                <p class="card-text">
+                                    <a href="${bookmark.url}" class="bookmark-url" target="_blank">${bookmark.url}</a>
+                                </p>
+                                <p class="card-text">
+                                    <span class="bookmark-category">${bookmark.category}</span>
+                                </p>
+                                <button class="edit btn btn-warning" onclick="editBookmark('${bookmark.id}')">Edit</button>
+                                <button class="btn btn-danger" onclick="deleteBookmark('${bookmark.id}')">Delete</button>
                             </div>
                         `;
                         categorySection.appendChild(bookmarkElement);

@@ -9,6 +9,8 @@ This project is a simple Bookmark Manager application that allows users to add, 
 - Delete bookmarks.
 - Categorize bookmarks.
 - Simple login system.
+- Dark mode toggle.
+- Responsive design using Bootstrap.
 
 ## Prerequisites
 
