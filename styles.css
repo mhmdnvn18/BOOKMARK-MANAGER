@@ -216,7 +216,11 @@ button.edit:hover {
 
 .bookmark-title, .research-title {
     font-weight: 600;
-    color: var(--text-color);
+    color: var(--text-dark); /* Ensure visibility in light mode */
+}
+
+body.dark-mode .bookmark-title, body.dark-mode .research-title {
+    color: var(--dark-text); /* Ensure visibility in dark mode */
 }
 
 .bookmark-url, .research-url {

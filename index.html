@@ -167,7 +167,7 @@
                         bookmarkElement.style.maxWidth = '18rem';
                         bookmarkElement.innerHTML = `
                             <div class="card-body">
-                                <h5 class="card-title">
+                                <h5 class="card-title bookmark-title">
                                     <img src="https://www.google.com/s2/favicons?domain=${bookmark.url}" class="favicon" alt="Favicon">
                                     ${bookmark.title}
                                 </h5>
@@ -276,6 +276,9 @@
                 document.querySelectorAll('.card').forEach(card => {
                     card.classList.toggle('dark-mode');
                 });
+                document.querySelectorAll('.bookmark-title').forEach(title => {
+                    title.classList.toggle('dark-mode');
+                });
                 localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
             });
 
@@ -286,6 +289,9 @@
                 });
                 document.querySelectorAll('.card').forEach(card => {
                     card.classList.add('dark-mode');
+                });
+                document.querySelectorAll('.bookmark-title').forEach(title => {
+                    title.classList.add('dark-mode');
                 });
             }
 

@@ -164,7 +164,7 @@
                         researchElement.style.maxWidth = '18rem';
                         researchElement.innerHTML = `
                             <div class="card-body">
-                                <h5 class="card-title">
+                                <h5 class="card-title research-title">
                                     <img src="https://www.google.com/s2/favicons?domain=${research.url}" class="favicon" alt="Favicon">
                                     ${research.title}
                                 </h5>
@@ -266,6 +266,9 @@
                 document.querySelectorAll('.card').forEach(card => {
                     card.classList.toggle('dark-mode');
                 });
+                document.querySelectorAll('.research-title').forEach(title => {
+                    title.classList.toggle('dark-mode-title');
+                });
                 localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
             });
 
@@ -276,6 +279,9 @@
                 });
                 document.querySelectorAll('.card').forEach(card => {
                     card.classList.add('dark-mode');
+                });
+                document.querySelectorAll('.research-title').forEach(title => {
+                    title.classList.add('dark-mode-title');
                 });
             }
 
