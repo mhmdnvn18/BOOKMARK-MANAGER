@@ -165,6 +165,8 @@ button.edit:hover {
     flex-wrap: nowrap; /* Changed from wrap to nowrap */
     gap: 1rem;
     overflow-x: auto; /* Added to allow horizontal scrolling */
+    overflow-y: visible; /* Ensure hover effect is not cut off */
+    z-index: 1; /* Ensure hover effect is not cut off */
 }
 
 .category-section {
@@ -176,6 +178,8 @@ button.edit:hover {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     min-width: 300px; /* Added to set a minimum width for each category section */
+    overflow: visible; /* Ensure hover effect is not cut off */
+    z-index: 1; /* Ensure hover effect is not cut off */
 }
 
 body.dark-mode .category-section {
@@ -185,6 +189,7 @@ body.dark-mode .category-section {
 .category-section:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 2; /* Ensure hover effect is not cut off */
 }
 
 @media (max-width: 768px) {
