@@ -70,19 +70,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             ${bookmark.title}
                         </h5>
                         <p class="card-text">
-                            <a href="${bookmark.url}" class="bookmark-url" target="_blank">${bookmark.url}</a>
+                            <button class="btn btn-link bookmark-url" onclick="window.open('${bookmark.url}', '_blank')">Visit Site</button>
                         </p>
                         <p class="card-text">
                             <span class="bookmark-category">${bookmark.category}</span>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Actions
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton${bookmark.id}">
-                                    <li><button class="dropdown-item" type="button" onclick="editBookmark('${bookmark.id}')">Edit</button></li>
-                                    <li><button class="dropdown-item" type="button" onclick="confirmDeleteBookmark('${bookmark.id}')">Delete</button></li>
-                                    <li><button class="dropdown-item" type="button" onclick="shareBookmark('${bookmark.url}', '${bookmark.title}')">Share</button></li>
-                                </ul>
+                            <div class="bookmark-actions d-flex justify-content-between">
+                                <button class="btn btn-warning btn-sm flex-fill me-1" onclick="editBookmark('${bookmark.id}')">Edit</button>
+                                <button class="btn btn-danger btn-sm flex-fill me-1" onclick="confirmDeleteBookmark('${bookmark.id}')">Delete</button>
+                                <button class="btn btn-info btn-sm flex-fill" onclick="shareBookmark('${bookmark.url}', '${bookmark.title}')">Share</button>
                             </div>
                         </p>
                     </div>
@@ -97,6 +92,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         bookmarkList.appendChild(categoryContainer);
+
+        // Initialize Bootstrap dropdowns
+        const dropdownElements = document.querySelectorAll('.dropdown-toggle');
+        dropdownElements.forEach(dropdown => {
+            new bootstrap.Dropdown(dropdown);
+        });
     }
 
     window.confirmDeleteBookmark = function(id) {
@@ -216,10 +217,4 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     displayBookmarks();
-
-    // Initialize Bootstrap dropdowns
-    const dropdownElements = document.querySelectorAll('.dropdown-toggle');
-    dropdownElements.forEach(dropdown => {
-        new bootstrap.Dropdown(dropdown);
-    });
 });
