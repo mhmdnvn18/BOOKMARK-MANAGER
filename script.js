@@ -64,19 +64,25 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="mb-3">
                             <i class="fab fa-${bookmark.icon} fa-2x text-primary"></i>
                         </div>
-                        <h3 class="h5 mb-2">${bookmark.title}</h3>
+                        <h3 class="h5 mb-2">
+                            <img src="https://www.google.com/s2/favicons?domain=${bookmark.url}" class="favicon" alt="Favicon">
+                            ${bookmark.title}
+                        </h3>
                         <p class="text-muted mb-3">${bookmark.description}</p>
                         <a href="${bookmark.url}" class="btn btn-sm btn-outline-primary" target="_blank">
                             Visit Site <i class="fas fa-external-link-alt ms-2"></i>
                         </a>
-                        <div class="bookmark-actions">
-                            <button class="btn btn-sm btn-light me-2" onclick="editBookmark('${bookmark.id}')">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-sm btn-light" onclick="deleteBookmark('${bookmark.id}')">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
+                        <p class="card-text">
+                            <span class="bookmark-category">${bookmark.category}</span>
+                            <div class="bookmark-actions">
+                                <button class="btn btn-sm btn-light me-2" onclick="editBookmark('${bookmark.id}')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-light" onclick="deleteBookmark('${bookmark.id}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </p>
                     `;
                     bookmarkList.appendChild(bookmarkElement);
                 });

@@ -294,6 +294,13 @@ body.dark-mode .btn-light {
     margin-bottom: 0.5rem;
 }
 
+.favicon {
+    width: 16px;
+    height: 16px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
 #login-page {
     display: flex;
     justify-content: center;

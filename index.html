@@ -133,7 +133,10 @@
                         bookmarkElement.style.maxWidth = '18rem';
                         bookmarkElement.innerHTML = `
                             <div class="card-body">
-                                <h5 class="card-title">${bookmark.title}</h5>
+                                <h5 class="card-title">
+                                    <img src="https://www.google.com/s2/favicons?domain=${bookmark.url}" class="favicon" alt="Favicon">
+                                    ${bookmark.title}
+                                </h5>
                                 <p class="card-text">
                                     <a href="${bookmark.url}" class="bookmark-url" target="_blank">${bookmark.url}</a>
                                 </p>
