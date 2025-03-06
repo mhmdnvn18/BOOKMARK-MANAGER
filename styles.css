@@ -82,7 +82,7 @@ body.dark-mode input[type="radio"] {
 header {
     background: var(--header-background);
     color: #fff;
-    padding: 0.5rem 0;
+    padding: 0.5rem 1rem; /* Adjusted padding for better spacing */
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: fixed; /* Make the header fixed */
@@ -485,6 +485,7 @@ body.dark-mode .glass-card {
     bottom: 1rem;
     right: 1rem;
     display: flex;
+    flex-direction: column; /* Align buttons vertically */
     gap: 0.5rem;
     opacity: 1; /* Ensure the buttons are visible */
     transition: opacity 0.3s ease;

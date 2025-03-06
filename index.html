@@ -70,7 +70,10 @@
                         <option value="Entertainment">Entertainment</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" id="cancel-edit" class="btn btn-secondary">Cancel</button>
+                </div>
             </form>
         </section>
         <section id="bookmarks" class="dark-mode-section">
@@ -83,6 +86,11 @@
             <p>&copy; 2025 Bookmark Manager. All rights reserved.</p>
         </div>
     </footer>
+    <div id="confirmation-dialog" class="confirmation-dialog" style="display: none;">
+        <p>Are you sure you want to delete this bookmark?</p>
+        <button id="confirm-delete" class="btn btn-danger">Yes</button>
+        <button id="cancel-delete" class="btn btn-secondary">No</button>
+    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -111,18 +119,25 @@
             const editForm = document.getElementById('edit-bookmark-form');
             const bookmarkList = document.getElementById('bookmark-list');
             const themeToggle = document.getElementById('theme-toggle');
+            const searchInput = document.getElementById('search-input');
+            const confirmationDialog = document.getElementById('confirmation-dialog');
+            const confirmDeleteButton = document.getElementById('confirm-delete');
+            const cancelDeleteButton = document.getElementById('cancel-delete');
             let editIndex = null;
+            let deleteIndex = null;
 
-            async function displayBookmarks() {
+            async function displayBookmarks(searchTerm = '') {
                 bookmarkList.innerHTML = '';
                 const querySnapshot = await getDocs(collection(db, 'bookmarks'));
                 const categories = {};
                 querySnapshot.forEach((doc) => {
                     const bookmark = doc.data();
-                    if (!categories[bookmark.category]) {
-                        categories[bookmark.category] = [];
+                    if (bookmark.title.toLowerCase().includes(searchTerm.toLowerCase()) || bookmark.url.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        if (!categories[bookmark.category]) {
+                            categories[bookmark.category] = [];
+                        }
+                        categories[bookmark.category].push({ ...bookmark, id: doc.id });
                     }
-                    categories[bookmark.category].push({ ...bookmark, id: doc.id });
                 });
 
                 const categoryContainer = document.createElement('div');
@@ -150,7 +165,7 @@
                                     <span class="bookmark-category">${bookmark.category}</span>
                                     <div class="bookmark-actions">
                                         <button class="edit btn btn-warning" onclick="editBookmark('${bookmark.id}')">Edit</button>
-                                        <button class="btn btn-danger" onclick="deleteBookmark('${bookmark.id}')">Delete</button>
+                                        <button class="btn btn-danger" onclick="showConfirmationDialog('${bookmark.id}')">Delete</button>
                                     </div>
                                 </p>
                                 
@@ -183,6 +198,21 @@
                 document.getElementById('edit-bookmark').style.display = 'block';
             }
 
+            window.showConfirmationDialog = function(id) {
+                deleteIndex = id;
+                confirmationDialog.style.display = 'block';
+            }
+
+            confirmDeleteButton.addEventListener('click', async function() {
+                await deleteDoc(doc(db, 'bookmarks', deleteIndex));
+                confirmationDialog.style.display = 'none';
+                displayBookmarks();
+            });
+
+            cancelDeleteButton.addEventListener('click', function() {
+                confirmationDialog.style.display = 'none';
+            });
+
             editForm.addEventListener('submit', async function(event) {
                 event.preventDefault();
                 const title = document.getElementById('edit-title').value;
@@ -191,6 +221,10 @@
                 await updateDoc(doc(db, 'bookmarks', editIndex), { title, url, category });
                 displayBookmarks();
                 editForm.reset();
+                document.getElementById('edit-bookmark').style.display = 'none';
+            });
+
+            document.getElementById('cancel-edit').addEventListener('click', function() {
                 document.getElementById('edit-bookmark').style.display = 'none';
             });
 
@@ -235,6 +269,10 @@
                     card.classList.add('dark-mode');
                 });
             }
+
+            searchInput.addEventListener('input', function() {
+                displayBookmarks(searchInput.value);
+            });
 
             displayBookmarks();
         });

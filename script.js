@@ -4,7 +4,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const bookmarkList = document.getElementById('bookmark-list');
     const themeToggle = document.getElementById('theme-toggle');
     const searchInput = document.getElementById('search-input');
+    const confirmationDialog = document.getElementById('confirmation-dialog');
+    const confirmDeleteButton = document.getElementById('confirm-delete');
+    const cancelDeleteButton = document.getElementById('cancel-delete');
+    const cancelEditButton = document.getElementById('cancel-edit');
     let editIndex = null;
+    let deleteIndex = null;
 
     // Firebase configuration
     const firebaseConfig = {
@@ -71,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <span class="bookmark-category">${bookmark.category}</span>
                             <div class="bookmark-actions">
                                 <button class="edit btn btn-warning" onclick="editBookmark('${bookmark.id}')">Edit</button>
-                                <button class="btn btn-danger" onclick="deleteBookmark('${bookmark.id}')">Delete</button>
+                                <button class="btn btn-danger" onclick="confirmDeleteBookmark('${bookmark.id}')">Delete</button>
                             </div>
                         </p>
                     </div>
@@ -88,10 +93,20 @@ document.addEventListener('DOMContentLoaded', function() {
         bookmarkList.appendChild(categoryContainer);
     }
 
-    window.deleteBookmark = async function(id) {
-        await deleteDoc(doc(db, 'bookmarks', id));
-        displayBookmarks();
+    window.confirmDeleteBookmark = function(id) {
+        deleteIndex = id;
+        confirmationDialog.style.display = 'block';
     }
+
+    confirmDeleteButton.addEventListener('click', async function() {
+        await deleteDoc(doc(db, 'bookmarks', deleteIndex));
+        confirmationDialog.style.display = 'none';
+        displayBookmarks();
+    });
+
+    cancelDeleteButton.addEventListener('click', function() {
+        confirmationDialog.style.display = 'none';
+    });
 
     window.editBookmark = async function(id) {
         editIndex = id;
@@ -102,6 +117,11 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('edit-category').value = bookmark.category;
         document.getElementById('edit-bookmark').style.display = 'block';
     }
+
+    cancelEditButton.addEventListener('click', function() {
+        editForm.reset();
+        document.getElementById('edit-bookmark').style.display = 'none';
+    });
 
     editForm.addEventListener('submit', async function(event) {
         event.preventDefault();
