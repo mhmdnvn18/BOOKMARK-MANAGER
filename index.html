@@ -22,12 +22,18 @@
                 <button id="theme-toggle" class="btn btn-secondary" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i></button>
                 <button class="btn btn-danger ms-2" onclick="logout()" aria-label="Logout">Logout</button>
                 <a href="research.html" class="btn btn-info ms-2" aria-label="Research Manager">Research Manager</a>
-                <button class="btn btn-success ms-2" onclick="exportBookmarks()" aria-label="Export Bookmarks">Export</button>
-                <input type="file" id="import-file" class="d-none" onchange="importBookmarks(event)" aria-label="Import Bookmarks">
-                <button class="btn btn-primary ms-2" onclick="document.getElementById('import-file').click()" aria-label="Import Bookmarks">Import</button>
+                <button class="btn btn-secondary ms-2" onclick="toggleSidebar()" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
             </div>
         </div>
     </header>
+    <div id="sidebar" class="sidebar">
+        <button class="closebtn" onclick="toggleSidebar()">&times;</button>
+        <div class="sidebar-content">
+            <button class="btn btn-success mb-2" onclick="exportBookmarks()" aria-label="Export Bookmarks">Export</button>
+            <input type="file" id="import-file" class="d-none" onchange="importBookmarks(event)" aria-label="Import Bookmarks">
+            <button class="btn btn-primary mb-2" onclick="document.getElementById('import-file').click()" aria-label="Import Bookmarks">Import</button>
+        </div>
+    </div>
     <main class="container" role="main">
         <section id="add-bookmark" class="mb-4 dark-mode-section" aria-labelledby="add-bookmark-heading">
             <h2 id="add-bookmark-heading" class="h4">Add Bookmark</h2>
@@ -333,6 +339,11 @@
                 displayBookmarks();
             }
             reader.readAsText(file);
+        }
+
+        window.toggleSidebar = function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
         }
     </script>
 </body>

@@ -247,4 +247,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         reader.readAsText(file);
     }
+
+    function loadTheme() {
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('dark-mode');
+            });
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.add('dark-mode');
+            });
+        }
+    }
+
+    loadTheme();
+
+    window.toggleSidebar = function() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('open');
+    }
 });
