@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             ${bookmark.title}
                         </h5>
                         <p class="card-text">
-                            <button class="btn btn-link bookmark-url" onclick="window.open('${bookmark.url}', '_blank')">Visit Site</button>
+                            <button class="btn btn-success btn-sm flex-fill me-1" onclick="window.open('${bookmark.url}', '_blank')">Visit Site</button>
                         </p>
                         <p class="card-text">
                             <span class="bookmark-category">${bookmark.category}</span>
@@ -217,4 +217,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     displayBookmarks();
+
+    window.exportBookmarks = async function() {
+        const querySnapshot = await getDocs(collection(db, 'bookmarks'));
+        const bookmarks = [];
+        querySnapshot.forEach((doc) => {
+            bookmarks.push(doc.data());
+        });
+        const blob = new Blob([JSON.stringify(bookmarks, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'bookmarks.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    window.importBookmarks = async function(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+            const bookmarks = JSON.parse(e.target.result);
+            for (const bookmark of bookmarks) {
+                await addDoc(collection(db, 'bookmarks'), bookmark);
+            }
+            displayBookmarks();
+        }
+        reader.readAsText(file);
+    }
 });
