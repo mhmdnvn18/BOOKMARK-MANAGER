@@ -64,7 +64,7 @@ body.dark-mode .form-control {
 
 body.dark-mode select {
     background: var(--dark-input-bg);
-    color: var(--dark-text);
+    color: var (--dark-text);
     border: 1px solid var(--dark-border);
 }
 
@@ -106,11 +106,29 @@ header .header-buttons .form-control {
     max-width: 200px;
 }
 
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header .header-buttons {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
+
+    header .header-buttons .form-control {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
 main {
     padding: 1rem;
     max-width: 1600px; /* Increased from 1400px to 1600px */
     margin: 0 auto;
-    padding-top: 5rem; /* Add padding to prevent content from being hidden behind the fixed header */
+    padding-top: 6rem; /* Add padding to prevent content from being hidden behind the fixed header */
 }
 
 #add-bookmark, #edit-bookmark, #bookmarks {
