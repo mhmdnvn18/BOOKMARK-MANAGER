@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('bookmark-form');
     const editForm = document.getElementById('edit-bookmark-form');
-    const bookmarkList = document.getElementById('bookmarks-grid');
+    const bookmarkList = document.getElementById('bookmark-list');
     const themeToggle = document.getElementById('theme-toggle');
-    const categoriesContainer = document.getElementById('categories-container');
     const searchInput = document.getElementById('search-input');
     let editIndex = null;
 
@@ -19,8 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
     const spinner = document.createElement('div');
     spinner.classList.add('spinner');
@@ -36,88 +35,67 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.appendChild(confirmationDialog);
 
     async function displayBookmarks() {
-        categoriesContainer.innerHTML = '';
-        spinner.style.display = 'block';
-        try {
-            const querySnapshot = await db.collection('bookmarks').get();
-            const categories = {};
-            querySnapshot.forEach((doc) => {
-                const bookmark = doc.data();
-                if (!categories[bookmark.category]) {
-                    categories[bookmark.category] = [];
-                }
-                categories[bookmark.category].push({ ...bookmark, id: doc.id });
-            });
+        bookmarkList.innerHTML = '';
+        const querySnapshot = await getDocs(collection(db, 'bookmarks'));
+        const categories = {};
+        querySnapshot.forEach((doc) => {
+            const bookmark = doc.data();
+            if (!categories[bookmark.category]) {
+                categories[bookmark.category] = [];
+            }
+            categories[bookmark.category].push({ ...bookmark, id: doc.id });
+        });
 
-            for (const category in categories) {
-                const categorySection = document.createElement('div');
-                categorySection.classList.add('category-section');
-                categorySection.innerHTML = `<h3 class="category-title">${category}</h3>`;
+        const categoryContainer = document.createElement('div');
+        categoryContainer.classList.add('category-container');
 
-                const bookmarkList = document.createElement('div');
-                bookmarkList.classList.add('bookmark-list');
+        for (const category in categories) {
+            const categorySection = document.createElement('div');
+            categorySection.classList.add('category-section');
+            categorySection.innerHTML = `<h3 class="category-title">${category} (${categories[category].length})</h3>`;
 
-                categories[category].forEach(bookmark => {
-                    const bookmarkElement = document.createElement('div');
-                    bookmarkElement.classList.add('bookmark-card');
-                    bookmarkElement.innerHTML = `
-                        <div class="category-chip">${bookmark.category}</div>
-                        <div class="mb-3">
-                            <i class="fab fa-${bookmark.icon} fa-2x text-primary"></i>
-                        </div>
-                        <h3 class="h5 mb-2">
+            categories[category].forEach(bookmark => {
+                const bookmarkElement = document.createElement('div');
+                bookmarkElement.classList.add('card', 'text-bg-primary', 'mb-3');
+                bookmarkElement.style.maxWidth = '18rem';
+                bookmarkElement.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="card-title">
                             <img src="https://www.google.com/s2/favicons?domain=${bookmark.url}" class="favicon" alt="Favicon">
                             ${bookmark.title}
-                        </h3>
-                        <p class="text-muted mb-3">${bookmark.description}</p>
-                        <a href="${bookmark.url}" class="btn btn-sm btn-outline-primary" target="_blank">
-                            Visit Site <i class="fas fa-external-link-alt ms-2"></i>
-                        </a>
+                        </h5>
+                        <p class="card-text">
+                            <a href="${bookmark.url}" class="bookmark-url" target="_blank">${bookmark.url}</a>
+                        </p>
                         <p class="card-text">
                             <span class="bookmark-category">${bookmark.category}</span>
                             <div class="bookmark-actions">
-                                <button class="btn btn-sm btn-light me-2" onclick="editBookmark('${bookmark.id}')">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="btn btn-sm btn-light" onclick="deleteBookmark('${bookmark.id}')">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                <button class="edit btn btn-warning" onclick="editBookmark('${bookmark.id}')">Edit</button>
+                                <button class="btn btn-danger" onclick="deleteBookmark('${bookmark.id}')">Delete</button>
                             </div>
                         </p>
-                    `;
-                    bookmarkList.appendChild(bookmarkElement);
-                });
+                    </div>
+                `;
+                if (document.body.classList.contains('dark-mode')) {
+                    bookmarkElement.classList.add('dark-mode');
+                }
+                categorySection.appendChild(bookmarkElement);
+            });
 
-                categorySection.appendChild(bookmarkList);
-                categoriesContainer.appendChild(categorySection);
-            }
-        } catch (error) {
-            console.error('Error fetching bookmarks:', error);
-        } finally {
-            spinner.style.display = 'none';
+            categoryContainer.appendChild(categorySection);
         }
+
+        bookmarkList.appendChild(categoryContainer);
     }
 
-    window.deleteBookmark = function(id) {
-        confirmationDialog.style.display = 'block';
-        document.getElementById('confirm-delete').onclick = async function() {
-            try {
-                await db.collection('bookmarks').doc(id).delete();
-                displayBookmarks();
-            } catch (error) {
-                console.error('Error deleting bookmark:', error);
-            } finally {
-                confirmationDialog.style.display = 'none';
-            }
-        };
-        document.getElementById('cancel-delete').onclick = function() {
-            confirmationDialog.style.display = 'none';
-        };
-    };
+    window.deleteBookmark = async function(id) {
+        await deleteDoc(doc(db, 'bookmarks', id));
+        displayBookmarks();
+    }
 
     window.editBookmark = async function(id) {
         editIndex = id;
-        const docSnap = await db.collection('bookmarks').doc(id).get();
+        const docSnap = await getDoc(doc(db, 'bookmarks', id));
         const bookmark = docSnap.data();
         document.getElementById('edit-title').value = bookmark.title;
         document.getElementById('edit-url').value = bookmark.url;
@@ -130,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = document.getElementById('edit-title').value;
         const url = document.getElementById('edit-url').value;
         const category = document.getElementById('edit-category').value;
-        await db.collection('bookmarks').doc(editIndex).update({ title, url, category });
+        await updateDoc(doc(db, 'bookmarks', editIndex), { title, url, category });
         displayBookmarks();
         editForm.reset();
         document.getElementById('edit-bookmark').style.display = 'none';
@@ -143,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const category = document.getElementById('category').value;
         console.log('Adding bookmark:', { title, url, category });
         try {
-            await db.collection('bookmarks').add({ title, url, category });
+            await addDoc(collection(db, 'bookmarks'), { title, url, category });
             console.log('Bookmark added successfully');
             displayBookmarks();
             form.reset();
@@ -159,22 +137,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     themeToggle.addEventListener('click', function() {
         document.body.classList.toggle('dark-mode');
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.toggle('dark-mode');
+        });
         document.querySelectorAll('.card').forEach(card => {
             card.classList.toggle('dark-mode');
-        });
-        document.querySelectorAll('.category-section').forEach(section => {
-            section.classList.toggle('dark-mode');
         });
         localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
     });
 
     if (localStorage.getItem('theme') === 'dark') {
         document.body.classList.add('dark-mode');
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('dark-mode');
+        });
         document.querySelectorAll('.card').forEach(card => {
             card.classList.add('dark-mode');
-        });
-        document.querySelectorAll('.category-section').forEach(section => {
-            section.classList.add('dark-mode');
         });
     }
 
@@ -184,10 +162,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function filterBookmarks(query) {
-        const bookmarks = document.querySelectorAll('.bookmark-card');
+        const bookmarks = document.querySelectorAll('.card');
         bookmarks.forEach(bookmark => {
-            const title = bookmark.querySelector('.h5').textContent.toLowerCase();
-            const url = bookmark.querySelector('a').href.toLowerCase();
+            const title = bookmark.querySelector('.card-title').textContent.toLowerCase();
+            const url = bookmark.querySelector('.bookmark-url').textContent.toLowerCase();
             if (title.includes(query) || url.includes(query)) {
                 bookmark.style.display = '';
             } else {

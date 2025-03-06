@@ -49,10 +49,23 @@ body.dark-mode .card {
     color: var(--dark-text);
 }
 
+body.dark-mode h2,
+body.dark-mode label,
+body.dark-mode .form-control,
+body.dark-mode .btn {
+    color: var(--dark-text);
+}
+
+body.dark-mode .form-control {
+    background: var(--dark-input-bg);
+    color: var(--dark-text);
+    border: 1px solid var(--dark-border);
+}
+
 header {
     background: var(--header-background);
     color: #fff;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: fixed; /* Make the header fixed */
@@ -473,4 +486,22 @@ body.dark-mode .search-bar input {
     background: var(--dark-input-bg);
     color: var(--dark-text);
     border: 1px solid var(--dark-border);
+}
+
+footer {
+    background: var(--header-background);
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode footer {
+    background: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+.dark-mode-section {
+    background: #333;
+    color: var(--dark-text);
 }
