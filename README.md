@@ -4,7 +4,7 @@ This project is a simple Bookmark Manager application that allows users to add, 
 
 ## Features
 
-- Add new bookmarks with title, URL, and category.
+- Add new bookmarks with title, URL, category, description, and icon.
 - Edit existing bookmarks.
 - Delete bookmarks.
 - Categorize bookmarks.
@@ -74,13 +74,13 @@ BOOKMARK-MANAGER/
 
 ### Adding a Bookmark
 
-1. Fill in the title, URL, and category in the "Add Bookmark" section.
+1. Fill in the title, URL, category, description, and icon in the "Add Bookmark" section.
 2. Click "Add Bookmark" to save the bookmark.
 
 ### Editing a Bookmark
 
 1. Click the "Edit" button next to the bookmark you want to edit.
-2. Update the title, URL, and category in the "Edit Bookmark" section.
+2. Update the title, URL, category, description, and icon in the "Edit Bookmark" section.
 3. Click "Save Changes" to update the bookmark.
 
 ### Deleting a Bookmark
