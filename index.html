@@ -139,9 +139,12 @@
                                 </p>
                                 <p class="card-text">
                                     <span class="bookmark-category">${bookmark.category}</span>
+                                    <div class="bookmark-actions">
+                                        <button class="edit btn btn-warning" onclick="editBookmark('${bookmark.id}')">Edit</button>
+                                        <button class="btn btn-danger" onclick="deleteBookmark('${bookmark.id}')">Delete</button>
+                                    </div>
                                 </p>
-                                <button class="edit btn btn-warning" onclick="editBookmark('${bookmark.id}')">Edit</button>
-                                <button class="btn btn-danger" onclick="deleteBookmark('${bookmark.id}')">Delete</button>
+                                
                             </div>
                         `;
                         if (document.body.classList.contains('dark-mode')) {

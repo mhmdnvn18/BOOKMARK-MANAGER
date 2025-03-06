@@ -405,7 +405,7 @@ body.dark-mode .glass-card {
     background: var(--primary-gradient);
     color: var(--text-light);
     padding: 0.25rem 0.75rem;
-    border-radius: 2rem;
+    border-radius: rem;
     font-size: 0.875rem;
 }
 
@@ -413,7 +413,9 @@ body.dark-mode .glass-card {
     position: absolute;
     bottom: 1rem;
     right: 1rem;
-    opacity: 0;
+    display: flex;
+    gap: 0.5rem;
+    opacity: 1; /* Ensure the buttons are visible */
     transition: opacity 0.3s ease;
 }
 
