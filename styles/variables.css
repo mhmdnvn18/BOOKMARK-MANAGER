@@ -107,7 +107,7 @@ button.edit:hover {
 }
 
 body.dark-mode .accent {
-    color: var(--dark-text); // Fixed typo
+    color: var(--dark-text);
 }
 
 body.dark-mode .text-muted {
@@ -116,7 +116,7 @@ body.dark-mode .text-muted {
 
 body.dark-mode .btn-light {
     background: var(--dark-card-bg);
-    color: var(--dark-text);
+    color: var(--dark-text); // Fixed typo
     border: 1px solid var(--dark-border);
 }
 

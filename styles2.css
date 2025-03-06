@@ -1,101 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
-:root {
-    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-    --card-bg: rgba(255, 255, 255, 0.9);
-    --text-dark: #1f2937;
-    --text-light: #f9fafb;
-    --dark-bg: #121212;
-    --dark-card-bg: rgba(255, 255, 255, 0.1);
-    --dark-text: #f9fafb;
-    --dark-input-bg: rgba(255, 255, 255, 0.2);
-    --dark-border: rgba(255, 255, 255, 0.3);
-    --dark-muted-text: rgba(249, 250, 251, 0.7);
-    --background-color: #f9f9f9;
-    --text-color: #333;
-    --header-background: #4b6cb7;
-    --button-background: #4b6cb7;
-    --button-hover-background: #182848;
-    --edit-button-background: #007bff;
-    --edit-button-hover-background: #0056b3;
-    --bookmark-category-background: #4b6cb7;
-    --logout-button-background: #ff4d4d;
-    --logout-button-hover-background: #ff1a1a;
-    --focus-outline: 2px solid #4b6cb7;
-    --focus-outline-dark: 2px solid #a855f7;
-}
-
-body {
-    background: var(--primary-gradient);
-    min-height: 100vh;
-    font-family: 'Inter', sans-serif;
-    color: var(--text-dark);
-    margin: 0;
-    padding: 0;
-}
-
-body.dark-mode {
-    background: var(--dark-bg);
-    color: var(--dark-text);
-}
-
-h2 {
-    margin-top: 0;
-    color: var(--text-color);
-    font-size: 1.25rem;
-    font-weight: 600;
-}
-
-form {
+.bookmark-card, .research-card {
+    flex: 1 1 calc(50% - 1rem);
+    position: relative;
+    overflow: hidden;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-input, button, select {
-    padding: 0.75rem;
-    margin: 0.5rem 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: background 0.3s ease, transform 0.2s ease;
+body.dark-mode .bookmark-card, body.dark-mode .research-card {
+    background: var(--dark-card-bg);
 }
 
-button {
-    background: var(--button-background);
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-button:hover {
-    background: var(--button-hover-background);
-    transform: scale(1.02);
-}
-
-button:focus, input:focus, select:focus {
-    outline: var(--focus-outline);
-    transform: scale(1.02);
-    outline-offset: 2px;
-}
-
-body.dark-mode button:focus, body.dark-mode input:focus, body.dark-mode select:focus {
-    outline: var(--focus-outline-dark);
-}
-
-button.edit {
-    background: var(--edit-button-background);
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-
-button.edit:hover {
-    background: var(--edit-button-hover-background);
-    transform: scale(1.02);
+.bookmark-card:hover, .research-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .accent {
@@ -107,7 +31,7 @@ button.edit:hover {
 }
 
 body.dark-mode .accent {
-    color: var(--dark-text); // Fixed typo
+    color: var(--dark-text);
 }
 
 body.dark-mode .text-muted {
@@ -118,6 +42,42 @@ body.dark-mode .btn-light {
     background: var(--dark-card-bg);
     color: var(--dark-text);
     border: 1px solid var(--dark-border);
+}
+
+.bookmark-details, .research-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.bookmark-preview, .research-preview {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.favicon {
+    width: 16px;
+    height: 16px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+.logout-button {
+    background: var(--logout-button-background);
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.logout-button:hover {
+    background: var(--logout-button-hover-background);
 }
 
 .spinner {
@@ -164,6 +124,32 @@ body.dark-mode .btn-light {
 
 body.dark-mode .glass-card {
     background: var(--dark-card-bg);
+}
+
+.category-chip {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--primary-gradient);
+    color: var(--text-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: rem;
+    font-size: 0.875rem;
+}
+
+.bookmark-actions, .research-actions {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column; /* Align buttons vertically */
+    gap: 0.5rem;
+    opacity: 1; /* Ensure the buttons are visible */
+    transition: opacity 0.3s ease;
+}
+
+.bookmark-card:hover .bookmark-actions, .research-card:hover .research-actions {
+    opacity: 1;
 }
 
 .hero-section {
@@ -245,4 +231,41 @@ button:focus {
 
 input:focus, select:focus {
     outline-offset: 2px;
+}
+
+.dropdown-menu {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.theme-customizer {
+    display: none;
+}
+
+.theme-customizer .form-group {
+    margin-bottom: 1rem;
+}
+
+.theme-customizer label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.theme-customizer input[type="color"] {
+    width: 100%;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+}
+
+.theme-customizer button {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+@media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar .btn {font-size: 18px;}
 }
