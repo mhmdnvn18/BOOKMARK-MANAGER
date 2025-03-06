@@ -14,18 +14,18 @@
             window.location.href = 'login.html';
         }
     </script>
-    <header class="bg-primary text-white p-3 mb-4">
+    <header class="bg-primary text-white p-3 mb-4" role="banner">
         <div class="container d-flex justify-content-between align-items-center flex-wrap">
             <h1 class="h3">Bookmark Manager</h1>
             <div class="header-buttons d-flex align-items-center flex-wrap">
-                <input type="text" id="search-input" class="form-control me-2" placeholder="Search bookmarks...">
-                <button id="theme-toggle" class="btn btn-secondary"><i class="fa-solid fa-moon"></i></button>
-                <button class="btn btn-danger ms-2" onclick="logout()">Logout</button>
-                <a href="research.html" class="btn btn-info ms-2">Research Manager</a>
+                <input type="text" id="search-input" class="form-control me-2" placeholder="Search bookmarks..." aria-label="Search bookmarks">
+                <button id="theme-toggle" class="btn btn-secondary" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i></button>
+                <button class="btn btn-danger ms-2" onclick="logout()" aria-label="Logout">Logout</button>
+                <a href="research.html" class="btn btn-info ms-2" aria-label="Research Manager">Research Manager</a>
             </div>
         </div>
     </header>
-    <main class="container">
+    <main class="container" role="main">
         <section id="add-bookmark" class="mb-4 dark-mode-section">
             <h2 class="h4">Add Bookmark</h2>
             <form id="bookmark-form" class="form">
@@ -82,7 +82,7 @@
             <div id="bookmark-list" class="row"></div>
         </section>
     </main>
-    <footer class="bg-primary text-white text-center p-3 mt-4">
+    <footer class="bg-primary text-white text-center p-3 mt-4" role="contentinfo">
         <div class="container">
             <p>&copy; 2025 Bookmark Manager. All rights reserved.</p>
         </div>
@@ -164,12 +164,17 @@
                                 </p>
                                 <p class="card-text">
                                     <span class="bookmark-category">${bookmark.category}</span>
-                                    <div class="bookmark-actions">
-                                        <button class="edit btn btn-warning" onclick="editBookmark('${bookmark.id}')">Edit</button>
-                                        <button class="btn btn-danger" onclick="showConfirmationDialog('${bookmark.id}')">Delete</button>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Actions
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton${bookmark.id}">
+                                            <li><button class="dropdown-item" type="button" onclick="editBookmark('${bookmark.id}')">Edit</button></li>
+                                            <li><button class="dropdown-item" type="button" onclick="showConfirmationDialog('${bookmark.id}')">Delete</button></li>
+                                            <li><button class="dropdown-item" type="button" onclick="shareBookmark('${bookmark.url}', '${bookmark.title}')">Share</button></li>
+                                        </ul>
                                     </div>
                                 </p>
-                                
                             </div>
                         `;
                         if (document.body.classList.contains('dark-mode')) {
@@ -277,6 +282,21 @@
 
             displayBookmarks();
         });
+
+        window.shareBookmark = function(url, title) {
+            const shareData = {
+                title: title,
+                text: `Check out this bookmark: ${title}`,
+                url: url
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData).catch(console.error);
+            } else {
+                const mailtoLink = `mailto:?subject=${encodeURIComponent(shareData.title)}&body=${encodeURIComponent(shareData.text)}%0A${encodeURIComponent(shareData.url)}`;
+                window.location.href = mailtoLink;
+            }
+        }
     </script>
 </body>
 </html>

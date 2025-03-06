@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.appendChild(spinner);
     document.body.appendChild(confirmationDialog);
 
-    async function displayBookmarks() {
+    async function displayBookmarks(searchTerm = '') {
         bookmarkList.innerHTML = '';
         const querySnapshot = await getDocs(collection(db, 'bookmarks'));
         const categories = {};
@@ -74,9 +74,15 @@ document.addEventListener('DOMContentLoaded', function() {
                         </p>
                         <p class="card-text">
                             <span class="bookmark-category">${bookmark.category}</span>
-                            <div class="bookmark-actions">
-                                <button class="edit btn btn-warning" onclick="editBookmark('${bookmark.id}')">Edit</button>
-                                <button class="btn btn-danger" onclick="confirmDeleteBookmark('${bookmark.id}')">Delete</button>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton${bookmark.id}">
+                                    <li><button class="dropdown-item" type="button" onclick="editBookmark('${bookmark.id}')">Edit</button></li>
+                                    <li><button class="dropdown-item" type="button" onclick="confirmDeleteBookmark('${bookmark.id}')">Delete</button></li>
+                                    <li><button class="dropdown-item" type="button" onclick="shareBookmark('${bookmark.url}', '${bookmark.title}')">Share</button></li>
+                                </ul>
                             </div>
                         </p>
                     </div>
@@ -194,5 +200,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    window.shareBookmark = function(url, title) {
+        const shareData = {
+            title: title,
+            text: `Check out this bookmark: ${title}`,
+            url: url
+        };
+
+        if (navigator.share) {
+            navigator.share(shareData).catch(console.error);
+        } else {
+            const mailtoLink = `mailto:?subject=${encodeURIComponent(shareData.title)}&body=${encodeURIComponent(shareData.text)}%0A${encodeURIComponent(shareData.url)}`;
+            window.location.href = mailtoLink;
+        }
+    }
+
     displayBookmarks();
+
+    // Initialize Bootstrap dropdowns
+    const dropdownElements = document.querySelectorAll('.dropdown-toggle');
+    dropdownElements.forEach(dropdown => {
+        new bootstrap.Dropdown(dropdown);
+    });
 });

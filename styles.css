@@ -21,6 +21,8 @@
     --bookmark-category-background: #4b6cb7;
     --logout-button-background: #ff4d4d;
     --logout-button-hover-background: #ff1a1a;
+    --focus-outline: 2px solid #4b6cb7;
+    --focus-outline-dark: 2px solid #a855f7;
 }
 
 body {
@@ -92,6 +94,7 @@ header {
     top: 0;
     width: 100%;
     z-index: 1000; /* Ensure the header is above other content */
+    transition: background 0.3s ease;
 }
 
 header h1 {
@@ -161,6 +164,7 @@ input, button, select {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 button {
@@ -168,13 +172,24 @@ button {
     color: #fff;
     border: none;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
     font-size: 1rem;
     font-weight: 600;
 }
 
 button:hover {
     background: var(--button-hover-background);
+    transform: scale(1.02);
+}
+
+button:focus, input:focus, select:focus {
+    outline: var(--focus-outline);
+    transform: scale(1.02);
+    outline-offset: 2px;
+}
+
+body.dark-mode button:focus, body.dark-mode input:focus, body.dark-mode select:focus {
+    outline: var(--focus-outline-dark);
 }
 
 button.edit {
@@ -182,11 +197,12 @@ button.edit {
     color: #fff;
     border: none;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
 button.edit:hover {
     background: var(--edit-button-hover-background);
+    transform: scale(1.02);
 }
 
 .bookmark, .research {
@@ -534,6 +550,7 @@ footer {
     padding: 1rem 0;
     text-align: center;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
 }
 
 body.dark-mode footer {
@@ -541,7 +558,65 @@ body.dark-mode footer {
     color: var(--dark-text);
 }
 
+footer:focus-within, header:focus-within {
+    background: var(--button-hover-background);
+}
+
 .dark-mode-section {
     background: #333;
     color: var(--dark-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}
+
+/* Accessibility improvements */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    text-decoration: underline;
+    outline: var(--focus-outline);
+}
+
+a:focus {
+    outline-offset: 2px;
+}
+
+button:focus {
+    outline-offset: 2px;
+}
+
+input:focus, select:focus {
+    outline-offset: 2px;
+}
+
+.dropdown-menu {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    color: #333;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+}
+
+.dropdown-item:focus {
+    background-color: #f8f9fa;
+    color: #007bff;
+    outline: none;
 }

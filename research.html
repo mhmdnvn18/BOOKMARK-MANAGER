@@ -14,18 +14,18 @@
             window.location.href = 'login.html';
         }
     </script>
-    <header class="bg-primary text-white p-3 mb-4">
+    <header class="bg-primary text-white p-3 mb-4" role="banner">
         <div class="container d-flex justify-content-between align-items-center flex-wrap">
             <h1 class="h3">Research Manager</h1>
             <div class="header-buttons d-flex align-items-center flex-wrap">
-                <input type="text" id="search-input" class="form-control me-2" placeholder="Search research papers...">
-                <button id="theme-toggle" class="btn btn-secondary"><i class="fa-solid fa-moon"></i></button>
-                <button class="btn btn-danger ms-2" onclick="logout()">Logout</button>
-                <a href="index.html" class="btn btn-info ms-2">Bookmark Manager</a>
+                <input type="text" id="search-input" class="form-control me-2" placeholder="Search research papers..." aria-label="Search research papers">
+                <button id="theme-toggle" class="btn btn-secondary" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i></button>
+                <button class="btn btn-danger ms-2" onclick="logout()" aria-label="Logout">Logout</button>
+                <a href="index.html" class="btn btn-info ms-2" aria-label="Bookmark Manager">Bookmark Manager</a>
             </div>
         </div>
     </header>
-    <main class="container">
+    <main class="container" role="main">
         <section id="add-research" class="mb-4 dark-mode-section">
             <h2 class="h4">Add Research Paper</h2>
             <form id="research-form" class="form">
@@ -82,7 +82,7 @@
             <div id="research-list" class="row"></div>
         </section>
     </main>
-    <footer class="bg-primary text-white text-center p-3 mt-4">
+    <footer class="bg-primary text-white text-center p-3 mt-4" role="contentinfo">
         <div class="container">
             <p>&copy; 2025 Research Manager. All rights reserved.</p>
         </div>
