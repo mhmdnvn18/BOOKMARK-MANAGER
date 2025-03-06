@@ -1,29 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 :root {
-    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-    --card-bg: rgba(255, 255, 255, 0.9);
-    --text-dark: #1f2937;
-    --text-light: #f9fafb;
     --background-color: #f9f9f9;
     --text-color: #333;
-    --header-background: #4b6cb7;
-    --button-background: #4b6cb7;
-    --button-hover-background: #182848;
-    --edit-button-background: #007bff;
-    --edit-button-hover-background: #0056b3;
-    --bookmark-category-background: #4b6cb7;
-    --logout-button-background: #ff4d4d;
-    --logout-button-hover-background: #ff1a1a;
+    --header-background: linear-gradient(90deg, #4b6cb7, #182848);
+    --button-background: linear-gradient(90deg, #4b6cb7, #182848);
+    --button-hover-background: linear-gradient(90deg, #182848, #4b6cb7);
+    --edit-button-background: linear-gradient(90deg, #007bff, #0056b3);
+    --edit-button-hover-background: linear-gradient(90deg, #0056b3, #007bff);
+    --bookmark-category-background: linear-gradient(90deg, #4b6cb7, #182848);
+    --logout-button-background: linear-gradient(90deg, #ff4d4d, #ff1a1a);
+    --logout-button-hover-background: linear-gradient(90deg, #ff1a1a, #ff4d4d);
 }
 
 body {
-    background: var(--primary-gradient);
-    min-height: 100vh;
     font-family: 'Inter', sans-serif;
-    color: var(--text-dark);
     margin: 0;
     padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 header {
@@ -182,11 +177,9 @@ button.edit:hover {
 }
 
 .bookmark-card {
-    position: relative;
-    overflow: hidden;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
     background: #fff;
+    padding: 1rem;
+    margin-bottom: 1rem;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -274,14 +267,14 @@ button.edit:hover {
 body.dark-mode {
     --background-color: #1a1a1a;
     --text-color: #f4f4f4;
-    --header-background: #182848;
-    --button-background: #182848;
-    --button-hover-background: #4b6cb7;
-    --edit-button-background: #0056b3;
-    --edit-button-hover-background: #007bff;
-    --bookmark-category-background: #182848;
-    --logout-button-background: #ff1a1a;
-    --logout-button-hover-background: #ff4d4d;
+    --header-background: linear-gradient(90deg, #182848, #4b6cb7);
+    --button-background: linear-gradient(90deg, #182848, #4b6cb7);
+    --button-hover-background: linear-gradient(90deg, #4b6cb7, #182848);
+    --edit-button-background: linear-gradient(90deg, #0056b3, #007bff);
+    --edit-button-hover-background: linear-gradient(90deg, #007bff, #0056b3);
+    --bookmark-category-background: linear-gradient(90deg, #182848, #4b6cb7);
+    --logout-button-background: linear-gradient(90deg, #ff1a1a, #ff4d4d);
+    --logout-button-hover-background: linear-gradient(90deg, #ff4d4d, #ff1a1a);
 }
 
 .spinner {
@@ -315,50 +308,4 @@ body.dark-mode {
 
 .confirmation-dialog button {
     margin: 0.5rem;
-}
-
-.glass-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(16px);
-    border-radius: 1rem;
-    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    transition: transform 0.3s ease;
-}
-
-.category-chip {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: var(--primary-gradient);
-    color: var(--text-light);
-    padding: 0.25rem 0.75rem;
-    border-radius: 2rem;
-    font-size: 0.875rem;
-}
-
-.bookmark-actions {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.bookmark-card:hover .bookmark-actions {
-    opacity: 1;
-}
-
-.hero-section {
-    padding: 4rem 0;
-    text-align: center;
-    color: var(--text-light);
-}
-
-.search-bar {
-    max-width: 600px;
-    margin: 2rem auto;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 2rem;
-    padding: 0.5rem 1rem;
 }

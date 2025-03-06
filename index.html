@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevBookmarks - Professional Resource Hub</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Bookmark Manager</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <!-- Hero Section -->
-    <header class="hero-section">
-        <div class="container">
-            <h1 class="display-4 fw-bold mb-3">DevBookmarks</h1>
-            <p class="lead mb-4">Curated collection of development resources</p>
-            <div class="search-bar">
-                <input type="text" class="form-control border-0 bg-transparent text-white" 
-                       placeholder="Search bookmarks...">
+    <script>
+        if (!localStorage.getItem('loggedIn')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <header class="bg-primary text-white p-3 mb-4">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="h3">Bookmark Manager</h1>
+            <div class="header-buttons">
+                <button id="theme-toggle" class="btn btn-secondary"><i class="fa-solid fa-moon"></i></button>
+                <button class="btn btn-danger" onclick="logout()">Logout</button>
             </div>
         </div>
     </header>
-
     <main class="container">
-        <!-- Add Bookmark Form (Visible to Admin) -->
-        <div class="glass-card mb-5 p-4" id="add-bookmark">
+        <section id="add-bookmark" class="mb-4">
             <h2 class="h4">Add Bookmark</h2>
             <form id="bookmark-form" class="form">
                 <div class="form-group">
@@ -46,41 +47,39 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Add Bookmark</button>
             </form>
-        </div>
-
-        <!-- Bookmarks Grid -->
-        <div class="row g-4" id="bookmarks-grid">
-            <!-- Dynamic Content -->
-            <div class="col-lg-4 col-md-6">
-                <div class="bookmark-card glass-card">
-                    <div class="category-chip">Tools</div>
-                    <div class="mb-3">
-                        <i class="fab fa-codepen fa-2x text-primary"></i>
-                    </div>
-                    <h3 class="h5 mb-2">CodePen</h3>
-                    <p class="text-muted mb-3">Online code editor and front-end web development learning environment</p>
-                    <a href="https://codepen.io" class="btn btn-sm btn-outline-primary" target="_blank">
-                        Visit Site <i class="fas fa-external-link-alt ms-2"></i>
-                    </a>
-                    <div class="bookmark-actions">
-                        <button class="btn btn-sm btn-light me-2">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-sm btn-light">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
+        </section>
+        <section id="edit-bookmark" class="mb-4" style="display: none;">
+            <h2 class="h4">Edit Bookmark</h2>
+            <form id="edit-bookmark-form" class="form">
+                <div class="form-group">
+                    <label for="edit-title">Title</label>
+                    <input type="text" id="edit-title" class="form-control" placeholder="Title" required>
                 </div>
-            </div>
-        </div>
+                <div class="form-group">
+                    <label for="edit-url">URL</label>
+                    <input type="url" id="edit-url" class="form-control" placeholder="URL" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-category">Category</label>
+                    <select id="edit-category" class="form-control" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Education">Education</option>
+                        <option value="Entertainment">Entertainment</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </section>
+        <section id="bookmarks">
+            <h2 class="h4">Bookmarks</h2>
+            <div id="bookmark-list" class="row"></div>
+        </section>
     </main>
-
-    <!-- Edit Modal -->
-    <div class="modal fade" id="editModal">
-        <!-- Modal content -->
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
