@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('styles/base.css');
+@import url('styles/header.css');
+@import url('styles/main.css');
+@import url('styles/sidebar.css');
+@import url('styles/dropdown.css');
 
 :root {
     --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
