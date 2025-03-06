@@ -32,12 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const categories = {};
         querySnapshot.forEach((doc) => {
             const research = doc.data();
-            if (research.title.toLowerCase().includes(searchTerm.toLowerCase()) || research.url.toLowerCase().includes(searchTerm.toLowerCase())) {
-                if (!categories[research.category]) {
-                    categories[research.category] = [];
-                }
-                categories[research.category].push({ ...research, id: doc.id });
+            if (!categories[research.category]) {
+                categories[research.category] = [];
             }
+            categories[research.category].push({ ...research, id: doc.id });
         });
 
         const categoryContainer = document.createElement('div');
@@ -59,13 +57,13 @@ document.addEventListener('DOMContentLoaded', function() {
                             ${research.title}
                         </h5>
                         <p class="card-text">
-                            <a href="${research.url}" class="research-url" target="_blank">${research.url}</a>
+                            <button class="btn btn-success btn-sm flex-fill me-1" onclick="window.open('${research.url}', '_blank')">Visit Site</button>
                         </p>
                         <p class="card-text">
                             <span class="research-category">${research.category}</span>
-                            <div class="research-actions">
-                                <button class="edit btn btn-warning" onclick="editResearch('${research.id}')">Edit</button>
-                                <button class="btn btn-danger" onclick="confirmDeleteResearch('${research.id}')">Delete</button>
+                            <div class="research-actions d-flex justify-content-between">
+                                <button class="btn btn-warning btn-sm flex-fill me-1" onclick="editResearch('${research.id}')">Edit</button>
+                                <button class="btn btn-danger btn-sm flex-fill me-1" onclick="confirmDeleteResearch('${research.id}')">Delete</button>
                             </div>
                         </p>
                     </div>
@@ -80,6 +78,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         researchList.appendChild(categoryContainer);
+
+        // Initialize Bootstrap dropdowns
+        const dropdownElements = document.querySelectorAll('.dropdown-toggle');
+        dropdownElements.forEach(dropdown => {
+            new bootstrap.Dropdown(dropdown);
+        });
     }
 
     window.confirmDeleteResearch = function(id) {
@@ -166,8 +170,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     searchInput.addEventListener('input', function() {
-        displayResearchPapers(searchInput.value);
+        const query = searchInput.value.toLowerCase();
+        filterResearchPapers(query);
     });
+
+    function filterResearchPapers(query) {
+        const researchPapers = document.querySelectorAll('.card');
+        researchPapers.forEach(research => {
+            const title = research.querySelector('.card-title').textContent.toLowerCase();
+            const url = research.querySelector('.research-url').textContent.toLowerCase();
+            if (title.includes(query) || url.includes(query)) {
+                research.style.display = '';
+            } else {
+                research.style.display = 'none';
+            }
+        });
+    }
 
     displayResearchPapers();
 });
