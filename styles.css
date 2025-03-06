@@ -65,6 +65,11 @@ header h1 {
 header .header-buttons {
     display: flex;
     gap: 1rem;
+    align-items: center;
+}
+
+header .header-buttons .form-control {
+    max-width: 200px;
 }
 
 main {
