@@ -37,6 +37,18 @@ body.dark-mode {
     color: var(--dark-text);
 }
 
+body.dark-mode #add-bookmark,
+body.dark-mode #edit-bookmark,
+body.dark-mode #bookmarks {
+    background: #333;
+    color: var(--dark-text);
+}
+
+body.dark-mode .card {
+    background: #444;
+    color: var(--dark-text);
+}
+
 header {
     background: var(--header-background);
     color: #fff;
@@ -56,8 +68,8 @@ header .header-buttons {
 }
 
 main {
-    padding: 2rem;
-    max-width: 1200px;
+    padding: 1rem;
+    max-width: 1600px; /* Increased from 1400px to 1600px */
     margin: 0 auto;
 }
 
@@ -150,18 +162,20 @@ button.edit:hover {
 
 .category-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* Changed from wrap to nowrap */
     gap: 1rem;
+    overflow-x: auto; /* Added to allow horizontal scrolling */
 }
 
 .category-section {
-    flex: 1 1 calc(50% - 1rem);
+    flex: 0 0 auto; /* Changed from flex: 1 1 calc(50% - 1rem) to flex: 0 0 auto */
     box-sizing: border-box;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     background: #fff;
     padding: 1rem;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    min-width: 300px; /* Added to set a minimum width for each category section */
 }
 
 body.dark-mode .category-section {
@@ -175,13 +189,13 @@ body.dark-mode .category-section {
 
 @media (max-width: 768px) {
     .category-section {
-        flex: 1 1 100%;
+        /* Removed flex: 1 1 100%; */
     }
 }
 
 @media (max-width: 480px) {
     .category-section {
-        flex: 1 1 100%;
+        /* Removed flex: 1 1 100%; */
     }
 }
 
