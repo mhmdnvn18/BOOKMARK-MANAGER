@@ -29,20 +29,21 @@
         </div>
     </header>
     <main class="container" role="main">
-        <section id="add-bookmark" class="mb-4 dark-mode-section">
-            <h2 class="h4">Add Bookmark</h2>
-            <form id="bookmark-form" class="form">
+        <section id="add-bookmark" class="mb-4 dark-mode-section" aria-labelledby="add-bookmark-heading">
+            <h2 id="add-bookmark-heading" class="h4">Add Bookmark</h2>
+            <form id="bookmark-form" class="form" aria-describedby="add-bookmark-description">
+                <div id="add-bookmark-description" class="sr-only">Fill in the details below to add a new bookmark.</div>
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" id="title" class="form-control" placeholder="Title" required>
+                    <input type="text" id="title" class="form-control" placeholder="Title" required aria-required="true">
                 </div>
                 <div class="form-group">
                     <label for="url">URL</label>
-                    <input type="url" id="url" class="form-control" placeholder="URL" required>
+                    <input type="url" id="url" class="form-control" placeholder="URL" required aria-required="true">
                 </div>
                 <div class="form-group">
                     <label for="category">Category</label>
-                    <select id="category" class="form-control" required>
+                    <select id="category" class="form-control" required aria-required="true">
                         <option value="" disabled selected>Select Category</option>
                         <option value="Work">Work</option>
                         <option value="Personal">Personal</option>
@@ -50,23 +51,24 @@
                         <option value="Entertainment">Entertainment</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Bookmark</button>
+                <button type="submit" class="btn btn-primary" aria-label="Add Bookmark">Add Bookmark</button>
             </form>
         </section>
-        <section id="edit-bookmark" class="mb-4 dark-mode-section" style="display: none;">
-            <h2 class="h4">Edit Bookmark</h2>
-            <form id="edit-bookmark-form" class="form">
+        <section id="edit-bookmark" class="mb-4 dark-mode-section" style="display: none;" aria-labelledby="edit-bookmark-heading">
+            <h2 id="edit-bookmark-heading" class="h4">Edit Bookmark</h2>
+            <form id="edit-bookmark-form" class="form" aria-describedby="edit-bookmark-description">
+                <div id="edit-bookmark-description" class="sr-only">Update the details below to edit the bookmark.</div>
                 <div class="form-group">
                     <label for="edit-title">Title</label>
-                    <input type="text" id="edit-title" class="form-control" placeholder="Title" required>
+                    <input type="text" id="edit-title" class="form-control" placeholder="Title" required aria-required="true">
                 </div>
                 <div class="form-group">
                     <label for="edit-url">URL</label>
-                    <input type="url" id="edit-url" class="form-control" placeholder="URL" required>
+                    <input type="url" id="edit-url" class="form-control" placeholder="URL" required aria-required="true">
                 </div>
                 <div class="form-group">
                     <label for="edit-category">Category</label>
-                    <select id="edit-category" class="form-control" required>
+                    <select id="edit-category" class="form-control" required aria-required="true">
                         <option value="" disabled selected>Select Category</option>
                         <option value="Work">Work</option>
                         <option value="Personal">Personal</option>
@@ -75,13 +77,13 @@
                     </select>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                    <button type="button" id="cancel-edit" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary" aria-label="Save Changes">Save Changes</button>
+                    <button type="button" id="cancel-edit" class="btn btn-secondary" aria-label="Cancel">Cancel</button>
                 </div>
             </form>
         </section>
-        <section id="bookmarks" class="dark-mode-section">
-            <h2 class="h4">Bookmarks</h2>
+        <section id="bookmarks" class="dark-mode-section" aria-labelledby="bookmarks-heading">
+            <h2 id="bookmarks-heading" class="h4">Bookmarks</h2>
             <div id="bookmark-list" class="row"></div>
         </section>
     </main>
@@ -90,10 +92,11 @@
             <p>&copy; 2025 Bookmark Manager. All rights reserved.</p>
         </div>
     </footer>
-    <div id="confirmation-dialog" class="confirmation-dialog" style="display: none;">
-        <p>Are you sure you want to delete this bookmark?</p>
-        <button id="confirm-delete" class="btn btn-danger">Yes</button>
-        <button id="cancel-delete" class="btn btn-secondary">No</button>
+    <div id="confirmation-dialog" class="confirmation-dialog" style="display: none;" role="dialog" aria-labelledby="confirmation-dialog-heading" aria-describedby="confirmation-dialog-description">
+        <h2 id="confirmation-dialog-heading" class="sr-only">Delete Confirmation</h2>
+        <p id="confirmation-dialog-description">Are you sure you want to delete this bookmark?</p>
+        <button id="confirm-delete" class="btn btn-danger" aria-label="Confirm Delete">Yes</button>
+        <button id="cancel-delete" class="btn btn-secondary" aria-label="Cancel Delete">No</button>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

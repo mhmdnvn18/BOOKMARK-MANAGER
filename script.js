@@ -33,8 +33,8 @@ document.addEventListener('DOMContentLoaded', function() {
     confirmationDialog.style.display = 'none';
     confirmationDialog.innerHTML = `
         <p>Are you sure you want to delete this bookmark?</p>
-        <button id="confirm-delete">Yes</button>
-        <button id="cancel-delete">No</button>
+        <button id="confirm-delete" class="btn btn-danger" aria-label="Confirm Delete">Yes</button>
+        <button id="cancel-delete" class="btn btn-secondary" aria-label="Cancel Delete">No</button>
     `;
     document.body.appendChild(spinner);
     document.body.appendChild(confirmationDialog);
