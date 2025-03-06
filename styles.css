@@ -166,7 +166,7 @@ button.edit:hover {
     gap: 1rem;
     overflow-x: auto; /* Added to allow horizontal scrolling */
     overflow-y: visible; /* Ensure hover effect is not cut off */
-    z-index: 1; /* Ensure hover effect is not cut off */
+    z-index: 0; /* Ensure hover effect is not cut off */
 }
 
 .category-section {
@@ -180,6 +180,7 @@ button.edit:hover {
     min-width: 300px; /* Added to set a minimum width for each category section */
     overflow: visible; /* Ensure hover effect is not cut off */
     z-index: 1; /* Ensure hover effect is not cut off */
+    margin-top: 1rem; /* Added to prevent top cut-off */
 }
 
 body.dark-mode .category-section {
