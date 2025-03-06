@@ -23,6 +23,12 @@
             </div>
         </div>
     </header>
+    <div id="sidebar" class="sidebar">
+        <button class="closebtn" onclick="toggleSidebar()">&times;</button>
+        <div class="sidebar-content">
+            <!-- Add any sidebar content here -->
+        </div>
+    </div>
     <main class="container" role="main">
         <section class="hero-section">
             <h2>Welcome to Bookmark Manager</h2>
@@ -37,5 +43,40 @@
     <script defer src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        if (!localStorage.getItem('loggedIn')) {
+            window.location.href = 'login.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                document.querySelectorAll('section').forEach(section => {
+                    section.classList.toggle('dark-mode');
+                });
+                document.querySelectorAll('.card').forEach(card => {
+                    card.classList.toggle('dark-mode');
+                });
+                localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            });
+
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.querySelectorAll('section').forEach(section => {
+                    section.classList.add('dark-mode');
+                });
+                document.querySelectorAll('.card').forEach(card => {
+                    card.classList.add('dark-mode');
+                });
+            }
+        });
+
+        window.toggleSidebar = function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+    </script>
 </body>
 </html>
