@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Manager</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <script>
+        if (!localStorage.getItem('loggedIn')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <header class="bg-primary text-white p-3 mb-4">
+        <div class="container d-flex justify-content-between align-items-center flex-wrap">
+            <h1 class="h3">Research Manager</h1>
+            <div class="header-buttons d-flex align-items-center flex-wrap">
+                <input type="text" id="search-input" class="form-control me-2" placeholder="Search research papers...">
+                <button id="theme-toggle" class="btn btn-secondary"><i class="fa-solid fa-moon"></i></button>
+                <button class="btn btn-danger ms-2" onclick="logout()">Logout</button>
+                <a href="index.html" class="btn btn-info ms-2">Bookmark Manager</a>
+            </div>
+        </div>
+    </header>
+    <main class="container">
+        <section id="add-research" class="mb-4 dark-mode-section">
+            <h2 class="h4">Add Research Paper</h2>
+            <form id="research-form" class="form">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" class="form-control" placeholder="Title" required>
+                </div>
+                <div class="form-group">
+                    <label for="url">URL</label>
+                    <input type="url" id="url" class="form-control" placeholder="URL" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" class="form-control" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Science">Science</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Mathematics">Mathematics</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Research Paper</button>
+            </form>
+        </section>
+        <section id="edit-research" class="mb-4 dark-mode-section" style="display: none;">
+            <h2 class="h4">Edit Research Paper</h2>
+            <form id="edit-research-form" class="form">
+                <div class="form-group">
+                    <label for="edit-title">Title</label>
+                    <input type="text" id="edit-title" class="form-control" placeholder="Title" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-url">URL</label>
+                    <input type="url" id="edit-url" class="form-control" placeholder="URL" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-category">Category</label>
+                    <select id="edit-category" class="form-control" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Science">Science</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Mathematics">Mathematics</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" id="cancel-edit" class="btn btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </section>
+        <section id="research-papers" class="dark-mode-section">
+            <h2 class="h4">Research Papers</h2>
+            <div id="research-list" class="row"></div>
+        </section>
+    </main>
+    <footer class="bg-primary text-white text-center p-3 mt-4">
+        <div class="container">
+            <p>&copy; 2025 Research Manager. All rights reserved.</p>
+        </div>
+    </footer>
+    <div id="confirmation-dialog" class="confirmation-dialog" style="display: none;">
+        <p>Are you sure you want to delete this research paper?</p>
+        <button id="confirm-delete" class="btn btn-danger">Yes</button>
+        <button id="cancel-delete" class="btn btn-secondary">No</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="module" src="research.js"></script>
+</body>
+</html>

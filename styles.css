@@ -39,14 +39,17 @@ body.dark-mode {
 
 body.dark-mode #add-bookmark,
 body.dark-mode #edit-bookmark,
-body.dark-mode #bookmarks {
+body.dark-mode #bookmarks,
+body.dark-mode #add-research,
+body.dark-mode #edit-research,
+body.dark-mode #research-papers {
     background: #333;
     color: var(--dark-text);
 }
 
 body.dark-mode .card {
     background: #444;
-    color: var(--dark-text);
+    color: var (--dark-text);
 }
 
 body.dark-mode h2,
@@ -131,7 +134,8 @@ main {
     padding-top: 6rem; /* Add padding to prevent content from being hidden behind the fixed header */
 }
 
-#add-bookmark, #edit-bookmark, #bookmarks {
+#add-bookmark, #edit-bookmark, #bookmarks,
+#add-research, #edit-research, #research-papers {
     background: #fff;
     padding: 2rem;
     margin-bottom: 2rem;
@@ -185,30 +189,30 @@ button.edit:hover {
     background: var(--edit-button-hover-background);
 }
 
-.bookmark {
+.bookmark, .research {
     padding: 1rem;
     border-bottom: 1px solid #ddd;
 }
 
-.bookmark:last-child {
+.bookmark:last-child, .research:last-child {
     border-bottom: none;
 }
 
-.bookmark-title {
+.bookmark-title, .research-title {
     font-weight: 600;
     color: var(--text-color);
 }
 
-.bookmark-url {
+.bookmark-url, .research-url {
     color: #007bff;
     text-decoration: none;
 }
 
-.bookmark-url:hover {
+.bookmark-url:hover, .research-url:hover {
     text-decoration: underline;
 }
 
-.bookmark-category {
+.bookmark-category, .research-category {
     font-style: italic;
     color: #fff;
     background: var(--bookmark-category-background);
@@ -274,13 +278,13 @@ body.dark-mode .category-section {
     font-weight: 600;
 }
 
-.bookmark-list {
+.bookmark-list, .research-list {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
 }
 
-.bookmark-card {
+.bookmark-card, .research-card {
     flex: 1 1 calc(50% - 1rem);
     position: relative;
     overflow: hidden;
@@ -295,11 +299,11 @@ body.dark-mode .category-section {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-body.dark-mode .bookmark-card {
+body.dark-mode .bookmark-card, body.dark-mode .research-card {
     background: var(--dark-card-bg);
 }
 
-.bookmark-card:hover {
+.bookmark-card:hover, .research-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -326,7 +330,7 @@ body.dark-mode .btn-light {
     border: 1px solid var(--dark-border);
 }
 
-.bookmark-card {
+.bookmark-card, .research-card {
     position: relative;
     overflow: hidden;
     padding: 1.5rem;
@@ -340,18 +344,18 @@ body.dark-mode .btn-light {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.bookmark-card:hover {
+.bookmark-card:hover, .research-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.bookmark-details {
+.bookmark-details, .research-details {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.bookmark-preview {
+.bookmark-preview, .research-preview {
     width: 50px;
     height: 50px;
     border-radius: 5px;
@@ -480,7 +484,7 @@ body.dark-mode .glass-card {
     font-size: 0.875rem;
 }
 
-.bookmark-actions {
+.bookmark-actions, .research-actions {
     position: absolute;
     bottom: 1rem;
     right: 1rem;
@@ -491,7 +495,7 @@ body.dark-mode .glass-card {
     transition: opacity 0.3s ease;
 }
 
-.bookmark-card:hover .bookmark-actions {
+.bookmark-card:hover .bookmark-actions, .research-card:hover .research-actions {
     opacity: 1;
 }
 
