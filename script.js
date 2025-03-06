@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const bookmarkList = document.getElementById('bookmarks-grid');
     const themeToggle = document.getElementById('theme-toggle');
     const categoriesContainer = document.getElementById('categories-container');
+    const searchInput = document.getElementById('search-input');
     let editIndex = null;
 
     // Firebase configuration
@@ -174,6 +175,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         document.querySelectorAll('.category-section').forEach(section => {
             section.classList.add('dark-mode');
+        });
+    }
+
+    searchInput.addEventListener('input', function() {
+        const query = searchInput.value.toLowerCase();
+        filterBookmarks(query);
+    });
+
+    function filterBookmarks(query) {
+        const bookmarks = document.querySelectorAll('.bookmark-card');
+        bookmarks.forEach(bookmark => {
+            const title = bookmark.querySelector('.h5').textContent.toLowerCase();
+            const url = bookmark.querySelector('a').href.toLowerCase();
+            if (title.includes(query) || url.includes(query)) {
+                bookmark.style.display = '';
+            } else {
+                bookmark.style.display = 'none';
+            }
         });
     }
 
